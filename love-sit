@@ -1,0 +1,156 @@
+import { useState, useEffect } from "react";
+
+export default function LoveSite() {
+  const [sec, setSec] = useState(1);
+
+  // توليد قلوب متحركة
+  const hearts = Array.from({ length: 25 });
+
+  const Section = ({ id, children }) => (
+    <div className={sec === id ? "section show" : "section"}>
+      {children}
+    </div>
+  );
+
+  return (
+    <div className="app">
+
+      {/* خلفية القلوب */}
+      <div className="hearts">
+        {hearts.map((_, i) => (
+          <span key={i}>🌹</span>
+        ))}
+      </div>
+
+      {/* القائمة الجانبية */}
+      <div className="sidebar">
+        <button onClick={() => setSec(1)}>💌 البداية</button>
+        <button onClick={() => setSec(2)}>📸 الصور</button>
+        <button onClick={() => setSec(3)}>🎥 الفيديو</button>
+        <button onClick={() => setSec(4)}>🍜 ذكريات</button>
+        <button onClick={() => setSec(5)}>🎵 الأغنية</button>
+        <button onClick={() => setSec(6)}>❤️ الرسالة</button>
+      </div>
+
+      {/* المحتوى */}
+      <div className="content">
+
+        <Section id={1}>
+          <h1>اهلا بيكي يا قلبي ❤️</h1>
+          <p>انتي اجمل حاجه حصلت في حياتي كلها 🌹</p>
+        </Section>
+
+        <Section id={2}>
+          <img src="https://i.imgur.com/Z8dZ4.jpg" className="img"/>
+        </Section>
+
+        <Section id={3}>
+          <video controls width="500">
+            <source src="YOUR_VIDEO_LINK.mp4" />
+          </video>
+        </Section>
+
+        <Section id={4}>
+          <h2>ذكرياتنا الجميلة 🍜</h2>
+        </Section>
+
+        <Section id={5}>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/Dgs2h3dCtLw"
+          ></iframe>
+        </Section>
+
+        <Section id={6}>
+          <h2>انا بحبك اوي ❤️🌹</h2>
+          <p>انتي حياتي كلها وعمري كله 🌹</p>
+        </Section>
+
+      </div>
+
+      {/* CSS */}
+      <style>{`
+
+      body{
+        margin:0;
+        font-family: Arial;
+        overflow:hidden;
+      }
+
+      .app{
+        display:flex;
+        height:100vh;
+        background:#5a0000;
+        color:white;
+      }
+
+      .sidebar{
+        width:200px;
+        background:#3b0000;
+        display:flex;
+        flex-direction:column;
+        padding:20px;
+      }
+
+      .sidebar button{
+        margin:10px 0;
+        padding:12px;
+        border:none;
+        background:#8b0000;
+        color:white;
+        cursor:pointer;
+        border-radius:10px;
+        transition:.3s;
+      }
+
+      .sidebar button:hover{
+        background:red;
+        transform:scale(1.1);
+      }
+
+      .content{
+        flex:1;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        position:relative;
+      }
+
+      .section{
+        position:absolute;
+        opacity:0;
+        transform:translateY(50px);
+        transition:1s;
+      }
+
+      .show{
+        opacity:1;
+        transform:translateY(0);
+      }
+
+      .img{
+        max-height:400px;
+        border-radius:20px;
+      }
+
+      /* الورد المتحرك */
+      .hearts span{
+        position:absolute;
+        font-size:25px;
+        animation: float 8s linear infinite;
+      }
+
+      .hearts span:nth-child(n){
+        left:calc(100% * var(--i));
+      }
+
+      @keyframes float{
+        0%{transform:translateY(100vh) rotate(0)}
+        100%{transform:translateY(-10vh) rotate(360deg)}
+      }
+
+      `}</style>
+    </div>
+  );
+}

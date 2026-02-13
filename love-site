@@ -1,0 +1,153 @@
+import { useState, useEffect } from "react";
+
+const introLines = [
+"عايز اقولك كلمتين يا قلبي… انتي اكتر انسانه لمستني قلبي ❤️🌹",
+"كل مره بتكلم معاكي اكني نسيت هموم الدنيا كلها ❤️🌹",
+"بحس اني لقيت حياتي كلها معاكي ❤️🌹",
+"وبتخليني اعيش احسن لحظات حياتي ❤️🌹",
+"بحبك لانك الامان كله ❤️🌹"
+];
+
+const gallery = [
+"/mnt/data/WhatsApp Image 2026-02-13 at 2.11.58 PM (1).jpeg",
+"/mnt/data/WhatsApp Image 2026-02-13 at 2.11.58 PM.jpeg",
+"/mnt/data/WhatsApp Image 2026-02-13 at 2.11.57 PM (4).jpeg",
+"/mnt/data/WhatsApp Image 2026-02-13 at 2.11.57 PM (3).jpeg",
+"/mnt/data/WhatsApp Image 2026-02-13 at 2.11.57 PM (2).jpeg",
+"/mnt/data/WhatsApp Image 2026-02-13 at 2.11.57 PM (1).jpeg",
+"/mnt/data/WhatsApp Image 2026-02-13 at 2.11.57 PM.jpeg",
+"/mnt/data/WhatsApp Image 2026-02-13 at 2.11.56 PM.jpeg"
+];
+
+export default function LoveSite() {
+  const [pass,setPass]=useState("");
+  const [ok,setOk]=useState(false);
+  const [sec,setSec]=useState(1);
+  const [text,setText]=useState("");
+  const [img,setImg]=useState(0);
+
+  // كتابة تدريجية + موسيقى
+  useEffect(()=>{
+    if(!ok) return;
+    const audio=new Audio("https://www.bensound.com/bensound-music/bensound-love.mp3");
+    audio.volume=0.4;
+    audio.play();
+
+    let l=0,c=0;
+    const i=setInterval(()=>{
+      setText(p=>p+introLines[l][c]);
+      c++;
+      if(c>=introLines[l].length){l++;c=0;setText(p=>p+"\n\n");}
+      if(l>=introLines.length) clearInterval(i);
+    },40);
+  },[ok]);
+
+  // سلايدر الصور
+  useEffect(()=>{
+    const s=setInterval(()=>setImg(i=>(i+1)%gallery.length),3000);
+    return()=>clearInterval(s);
+  },[]);
+
+  if(!ok)
+    return(
+      <div className="h-screen flex items-center justify-center bg-pink-200">
+        <div className="bg-white p-8 rounded-2xl shadow text-center">
+          <h2 className="text-xl mb-4">🔐 ادخل الباسورد</h2>
+          <input type="password" className="border p-2"
+            onChange={e=>setPass(e.target.value)}/>
+          <br/>
+          <button onClick={()=>pass==="1234"&&setOk(true)}
+            className="bg-red-400 text-white px-6 py-2 rounded mt-4">
+            دخول ❤️
+          </button>
+        </div>
+      </div>
+    );
+
+  const Section=({id,children})=>(
+    <div className={sec===id?"block":"hidden"}>{children}</div>
+  );
+
+  return(
+    <div className="min-h-screen p-6 text-center"
+      style={{backgroundImage:"url('https://i.imgur.com/8Km9tLL.png')",backgroundSize:"cover"}}>
+
+      {/* قلوب متحركة */}
+      <div className="fixed inset-0 text-4xl animate-pulse pointer-events-none">
+        ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️
+      </div>
+
+      {/* سكشن 1 */}
+      <Section id={1}>
+        <div className="bg-white/80 p-6 rounded-3xl shadow max-w-3xl mx-auto whitespace-pre-line">
+          {text}
+        </div>
+      </Section>
+
+      {/* سكشن 2 الصور */}
+      <Section id={2}>
+        <h2 className="text-2xl mb-4">ذكرياتنا ❤️</h2>
+        <img src={gallery[img]}
+          className="mx-auto rounded-3xl shadow-2xl max-h-[400px]"/>
+      </Section>
+
+      {/* سكشن 3 الفيديو */}
+      <Section id={3}>
+        <video controls width="500" className="mx-auto rounded-2xl shadow">
+          <source src="/mnt/data/WhatsApp Video 2026-02-13 at 2.11.18 PM (1).mp4"/>
+        </video>
+      </Section>
+
+      {/* سكشن 4 الاندومي */}
+      <Section id={4}>
+        <h2 className="text-2xl mb-4">ذكريات الاندومي 😄</h2>
+        <img src="/mnt/data/WhatsApp Image 2026-02-13 at 2.09.03 PM (1).jpeg"
+          className="mx-auto rounded-2xl shadow"/>
+        <img src="/mnt/data/WhatsApp Image 2026-02-13 at 2.09.03 PM.jpeg"
+          className="mx-auto rounded-2xl shadow mt-4"/>
+      </Section>
+
+      {/* سكشن 5 الأغنية */}
+      <Section id={5}>
+        <iframe width="560" height="315"
+          src="https://www.youtube.com/embed/Dgs2h3dCtLw?autoplay=1&mute=1"
+          className="mx-auto rounded-2xl shadow"/>
+      </Section>
+{/* سكشن 6 الرسالة الأخيرة */}
+<Section id={6}>
+  <div className="bg-white/80 p-6 rounded-3xl shadow max-w-3xl mx-auto leading-8 text-lg">
+
+  انا بحبك اوي مش مجرد حب اي حد ممكن يحب بس انا بعشقك ❤️🌹
+  شايفك كل حياتي شايفك حياتي كلها و عمري الجاي شايفك كل ما ليا ❤️🌹
+  
+  شايفك حبيبتي و صحبتي و امي و بنتي و ام العيال و زوجتي ❤️🌹
+  
+  شايفك حياتي كلها الجايه ال بسعي ليها ❤️🌹
+  
+  وجودك جمبي بيرحيني و يشيل عني اي ضغط ❤️🌹
+  
+  وجودك جمبي شئ كبير جدا بالنسبه ليا ❤️🌹
+  
+  وجودك بس جمبي مش محتاج حاجه من الدنيا كلها الا انك تبقي جمبي العمر كلو ❤️🌹
+  
+  و متبعديش عني لحظه و لا نسيب بعض ابدا ❤️🌹
+  
+  شايفك عنيا ال بشوف بيها و حياتي ال بعشها و عمري كلو ❤️🌹
+  
+  شايفك حد يستاهل حبي بجد انسانه محترمه قوي و متربيه ❤️🌹
+  
+  بتحب اهلها و الناس كلها بتشهد بادبها و احترامها ❤️🌹
+  
+  و تلبسي الخمار على خير ❤️🌹
+  
+  و اشوفك احسن حد فالدنيا كلها ❤️🌹
+  
+  و ان شاء الله تاخدي خطوه اللبس الشرعي ❤️🌹
+  
+  و ان شاء الله يا روحي اشوفك احسن الناس كلها ❤️🌹
+  
+  و اشوفك احسن دكتوره فالدنيا ❤️🌹
+
+  </div>
+</Section>
+
